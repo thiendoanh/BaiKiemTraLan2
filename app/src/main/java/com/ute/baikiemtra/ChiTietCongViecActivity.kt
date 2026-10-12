@@ -9,6 +9,8 @@ import com.ute.baikiemtra.databinding.ActivityChiTietCongViecBinding
 class ChiTietCongViecActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChiTietCongViecBinding
+    // 1. Đặt biến congViecHienTai ở đây
+    private lateinit var congViecHienTai: CongViec
 
     private val boKhoiDongChinhSua = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -18,8 +20,10 @@ class ChiTietCongViecActivity : AppCompatActivity() {
             val tenMoi = data?.getStringExtra("EXTRA_TEN_MOI") ?: ""
             val moTaMoi = data?.getStringExtra("EXTRA_MO_TA_MOI") ?: ""
 
-            binding.tvHienThiTen.text = "Tên công việc: $tenMoi"
-            binding.tvHienThiMoTa.text = "Mô tả: $moTaMoi"
+            // Cập nhật lại đối tượng và giao diện sau khi chỉnh sửa
+            congViecHienTai.tenCongViec = tenMoi
+            congViecHienTai.moTa = moTaMoi
+            capNhatGiaoDien()
         }
     }
 
@@ -28,18 +32,26 @@ class ChiTietCongViecActivity : AppCompatActivity() {
         binding = ActivityChiTietCongViecBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val tenCv = intent.getStringExtra("EXTRA_TEN_CV") ?: ""
-        val moTaCv = intent.getStringExtra("EXTRA_MO_TA_CV") ?: ""
+        // 2. Nhận đối tượng CongViec từ Intent truyền sang
+        congViecHienTai = intent.getSerializableExtra("EXTRA_CONG_VIEC") as? CongViec
+            ?: CongViec("", "")
 
-        binding.tvHienThiTen.text = "Tên công việc: $tenCv"
-        binding.tvHienThiMoTa.text = "Mô tả: $moTaCv"
+        // Gọi hàm cập nhật giao diện
+        capNhatGiaoDien()
 
+        // Xử lý sự kiện bấm nút Chỉnh sửa
         binding.btnChinhSua.setOnClickListener {
             val intent = Intent(this, ChinhSuaCongViecActivity::class.java).apply {
-                putExtra("EXTRA_TEN_CV", binding.tvHienThiTen.text.toString().replace("Tên công việc: ", ""))
-                putExtra("EXTRA_MO_TA_CV", binding.tvHienThiMoTa.text.toString().replace("Mô tả: ", ""))
+                putExtra("EXTRA_TEN_CV", congViecHienTai.tenCongViec)
+                putExtra("EXTRA_MO_TA_CV", congViecHienTai.moTa)
             }
             boKhoiDongChinhSua.launch(intent)
         }
+    }
+
+    // 3. Đặt hàm capNhatGiaoDien() ở đây
+    private fun capNhatGiaoDien() {
+        binding.tvHienThiTen.text = "Tên công việc: ${congViecHienTai.tenCongViec}"
+        binding.tvHienThiMoTa.text = "Mô tả: ${congViecHienTai.moTa}"
     }
 }

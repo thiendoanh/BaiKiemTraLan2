@@ -18,9 +18,9 @@ class MainActivity : AppCompatActivity() {
             val tenCv = binding.etTenCongViec.text.toString()
             val moTaCv = binding.etMoTaCongViec.text.toString()
 
+            val doiTuongCongViec = CongViec(tenCv, moTaCv)
             val intent = Intent(this, ChiTietCongViecActivity::class.java).apply {
-                putExtra("EXTRA_TEN_CV", tenCv)
-                putExtra("EXTRA_MO_TA_CV", moTaCv)
+                putExtra("EXTRA_CONG_VIEC", doiTuongCongViec)
             }
             startActivity(intent)
         }
