@@ -18,9 +18,11 @@ class ChiTietCongViecActivity : AppCompatActivity() {
             val data = result.data
             val tenMoi = data?.getStringExtra("EXTRA_TEN_MOI") ?: ""
             val moTaMoi = data?.getStringExtra("EXTRA_MO_TA_MOI") ?: ""
+            val uuTienMoi = data?.getStringExtra("EXTRA_UU_TIEN_MOI") ?: "Trung bình"
 
             congViecHienTai.tenCongViec = tenMoi
             congViecHienTai.moTa = moTaMoi
+            congViecHienTai.mucDoUuTien = uuTienMoi
             capNhatGiaoDien()
         }
     }
@@ -30,12 +32,11 @@ class ChiTietCongViecActivity : AppCompatActivity() {
         binding = ActivityChiTietCongViecBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        congViecHienTai = intent.getSerializableExtra("EXTRA_CONG_VIEC") as? CongViec
+        congViecHienTai = (intent.getSerializableExtra("EXTRA_CONG_VIEC") as? CongViec)
             ?: CongViec("", "")
 
         capNhatGiaoDien()
 
-        // 1. ĐẶT ĐOẠN XỬ LÝ CHECKBOX Ở ĐÂY (Bên trong onCreate)
         binding.cbHoanThanh.setOnCheckedChangeListener { _, isChecked ->
             congViecHienTai.trangThai = isChecked
             hienThiTrangThai()
@@ -45,6 +46,7 @@ class ChiTietCongViecActivity : AppCompatActivity() {
             val intent = Intent(this, ChinhSuaCongViecActivity::class.java).apply {
                 putExtra("EXTRA_TEN_CV", congViecHienTai.tenCongViec)
                 putExtra("EXTRA_MO_TA_CV", congViecHienTai.moTa)
+                putExtra("EXTRA_UU_TIEN_CV", congViecHienTai.mucDoUuTien)
             }
             boKhoiDongChinhSua.launch(intent)
         }
@@ -53,11 +55,11 @@ class ChiTietCongViecActivity : AppCompatActivity() {
     private fun capNhatGiaoDien() {
         binding.tvHienThiTen.text = "Tên công việc: ${congViecHienTai.tenCongViec}"
         binding.tvHienThiMoTa.text = "Mô tả: ${congViecHienTai.moTa}"
+        binding.tvHienThiMucDoUuTien.text = "Mức độ ưu tiên: ${congViecHienTai.mucDoUuTien}"
         binding.cbHoanThanh.isChecked = congViecHienTai.trangThai
         hienThiTrangThai()
     }
 
-    // 2. ĐẶT HÀM hienThiTrangThai() Ở ĐÂY (Nằm ngoài onCreate)
     private fun hienThiTrangThai() {
         binding.tvTrangThai.text = "Trạng thái: " +
                 if (congViecHienTai.trangThai) "Đã hoàn thành" else "Chưa hoàn thành"
