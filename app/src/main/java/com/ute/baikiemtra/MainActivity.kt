@@ -18,6 +18,11 @@ class MainActivity : AppCompatActivity() {
             val tenCv = binding.etTenCongViec.text.toString()
             val moTaCv = binding.etMoTaCongViec.text.toString()
 
+            if (tenCv.isEmpty()) {
+                binding.etTenCongViec.error = "Tên công việc không được để trống!"
+                return@setOnClickListener
+            }
+
             val doiTuongCongViec = CongViec(tenCv, moTaCv)
             val intent = Intent(this, ChiTietCongViecActivity::class.java).apply {
                 putExtra("EXTRA_CONG_VIEC", doiTuongCongViec)
