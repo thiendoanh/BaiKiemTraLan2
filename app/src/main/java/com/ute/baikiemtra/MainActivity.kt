@@ -1,5 +1,6 @@
 package com.ute.baikiemtra
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.ute.baikiemtra.databinding.ActivityMainBinding
@@ -12,5 +13,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.btnTaoCongViec.setOnClickListener {
+            val tenCv = binding.etTenCongViec.text.toString()
+            val moTaCv = binding.etMoTaCongViec.text.toString()
+
+            val intent = Intent(this, ChiTietCongViecActivity::class.java).apply {
+                putExtra("EXTRA_TEN_CV", tenCv)
+                putExtra("EXTRA_MO_TA_CV", moTaCv)
+            }
+            startActivity(intent)
+        }
     }
 }
