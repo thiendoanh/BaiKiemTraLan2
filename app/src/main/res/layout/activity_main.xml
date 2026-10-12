@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvThongTinSinhVien"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Họ tên: Lâm Hưng Thiên Doanh\nMSV: 2415053122206\nLớp: 24T2"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/etTenCongViec"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Nhập tên công việc" />
+
+    <EditText
+        android:id="@+id/etMoTaCongViec"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Nhập mô tả công việc" />
+
+    <Button
+        android:id="@+id/btnTaoCongViec"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Tạo công việc" />
+
+    <Button
+        android:id="@+id/btnXemDanhSachCongViec"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Xem danh sách công việc" />
+
+</LinearLayout>
